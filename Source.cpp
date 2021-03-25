@@ -1,8 +1,13 @@
 // Лабораторная работа 2 (3 семестр)
 
-#include "Payment.h"
+#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
+#define _CRT_SECURE_NO_WARNINGS
+#pragma warning(disable:4996)
+#endif  // для работы классических функций ("НЕБЕЗОПАСНЫХ!"_s)
+
 #include <iostream>
 #include <vector>
+#include "Payment.h"
 
 using namespace std;
 
@@ -16,6 +21,7 @@ int main()
 	int choose = 0;
 	bool a = true;
 	vector<Payment>payvec;
+
 	while (a)
 	{
 		if (check_pause)
