@@ -42,6 +42,7 @@ int main()
 		cout << "8) Изменить оклад" << endl;
 		cout << "9) Изменить год поступления" << endl;
 		cout << "10) Расчитать зарплату с вычетом процентов" << endl << endl;
+		cout << "11) Записать в файл" << endl;
 		cout << "0) Выход\n";
 		cin >> choose;
 		cout << endl;
@@ -233,6 +234,14 @@ int main()
 
 			break;
 		}
+		case(11):
+		{
+			int NumOfWorker;
+			cout << "Введите номер работника" << endl;
+			cin >> NumOfWorker;
+			cout << payvec[NumOfWorker - 1] << endl;
+			break;
+		}
 		case 0: // Выход
 		{
 			a = false;
@@ -257,4 +266,13 @@ void Foo(Payment& Object) // Показывает зарплату с вычетом всех процентов
 	i3 = Object.NDFL();
 	result = i1 + i2 + i3;
 	cout << i1 - (i2 + i3) << endl << endl;
+}
+
+ostream& operator << (ostream& os, Payment& Object)
+{
+	os << "Имя: " << Object.fio << endl
+		<< "Год устройства: " << *Object.year << endl
+		<< "Отработанных дней: " << *Object.workday << endl
+		<< "Оклад за смену: " << *Object.salary << endl;
+	return os;
 }

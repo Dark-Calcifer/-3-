@@ -205,5 +205,7 @@ public:
 
 	friend void Foo(Payment& Object);
 
+	friend ostream& operator << (ostream& os, Payment& Object);
+
 };
 
