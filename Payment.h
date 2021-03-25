@@ -1,5 +1,5 @@
 #pragma once
-//#define DEBUG
+#define DEBUG
 #define DEBUG2
 using namespace std;
 
@@ -23,8 +23,7 @@ public:
 #ifdef DEBUG
 		cout << "------Сработал конструктор по умолчанию" << endl << endl;
 #endif 
-
-		fio = new char[1]; // фио
+		fio = new char[100]; // фио
 		fio[0] = '\0';
 		salary = new int(0); // оклад за смену
 		year = new int(0); // год устройства на работу
@@ -206,6 +205,8 @@ public:
 	friend void Foo(Payment& Object);
 
 	friend ostream& operator << (ostream& os, Payment& Object);
+
+	friend istream& operator >> (istream& is, Payment& Object);
 
 };
 

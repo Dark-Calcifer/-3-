@@ -30,7 +30,7 @@ int main()
 			system("cls");
 		}
 		check_pause = false;
-
+		choose = 0;
 		cout << "\tВыберете пункт " << endl << endl;
 		cout << "1) Ввести данные сотрудника " << endl;
 		cout << "2) Рассчитать зарплату " << endl;
@@ -42,7 +42,8 @@ int main()
 		cout << "8) Изменить оклад" << endl;
 		cout << "9) Изменить год поступления" << endl;
 		cout << "10) Расчитать зарплату с вычетом процентов" << endl << endl;
-		cout << "11) Записать в файл" << endl;
+		cout << "11) Поместить в выходной поток / Вывод в поток" << endl;
+		cout << "12) Получить из входного потока / Ввод из потока" << endl;
 		cout << "0) Выход\n";
 		cin >> choose;
 		cout << endl;
@@ -234,12 +235,31 @@ int main()
 
 			break;
 		}
-		case(11):
+		case(11): // Поместить в выходной поток / Вывод в поток
 		{
 			int NumOfWorker;
 			cout << "Введите номер работника" << endl;
 			cin >> NumOfWorker;
 			cout << payvec[NumOfWorker - 1] << endl;
+			break;
+		}
+		case(12): // Получить из входного потока / Ввод из потока
+		{
+			int NumOfWorker;
+			cout << "Введите номер работника (0 - новый работник)" << endl;
+			cin >> NumOfWorker;
+			if (NumOfWorker != 0)
+			{
+				cin >> payvec[NumOfWorker - 1];
+				break;
+			}
+			if (NumOfWorker == 0)
+			{
+				Payment Person1;
+				cin >> Person1;
+				payvec.push_back(Person1);
+				break;
+			}
 			break;
 		}
 		case 0: // Выход
@@ -253,6 +273,8 @@ int main()
 		}
 
 	}
+	return 0;
+
 }
 
 void Foo(Payment& Object) // Показывает зарплату с вычетом всех процентов
@@ -271,8 +293,28 @@ void Foo(Payment& Object) // Показывает зарплату с вычетом всех процентов
 ostream& operator << (ostream& os, Payment& Object)
 {
 	os << "Имя: " << Object.fio << endl
-		<< "Год устройства: " << *Object.year << endl
-		<< "Отработанных дней: " << *Object.workday << endl
-		<< "Оклад за смену: " << *Object.salary << endl;
+	   << "Год устройства: " << *Object.year << endl
+	   << "Отработанных дней: " << *Object.workday << endl
+	   << "Оклад за смену: " << *Object.salary << endl;
 	return os;
+}
+
+istream& operator >> (istream& is, Payment& Object)
+{
+	cout << "Введите имя " << endl;
+	char A[100] = "";
+	is.ignore();
+	is.getline(A, 100);
+	Object.setfio(A);
+
+	cout << "Введите оплату за смену " << endl;
+	is >> *Object.salary;
+
+	cout << "Введите год " << endl;
+	is >> *Object.year;
+
+	cout << "Введите отработанные дни " << endl;
+	is >> *Object.workday;
+
+	return is;
 }
