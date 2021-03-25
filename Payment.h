@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 //#define DEBUG
-
+#define DEBUG2
 using namespace std;
 
 bool checkdestr = true;
@@ -16,7 +16,7 @@ private:
 
 
 public:
-	static int nds;
+	static int ndfl;
 	static int prs;
 
 	Payment()  //по умолчанию
@@ -31,7 +31,7 @@ public:
 		year = new int(0); // год устройства на работу
 		workday = new int(0); // отработанных дней
 
-};
+	};
 
 	Payment(char* fio, int* salary, int* year, int* workday) // конструктор с параметрами
 	{
@@ -96,36 +96,36 @@ public:
 		return pension;
 	}
 
-	int NDS()
+	int NDFL()
 	{
 		int nds;
-		nds = PaymentForMonth() / prs * this->nds;
+		nds = PaymentForMonth() / prs * this->ndfl;
 
 		return nds;
 	}
 
 	void ShowPaymentForMonth()
 	{
-		cout << "Имя: " << fio << endl << endl;
+		cout << endl << "Имя: " << fio << endl << endl;
 		cout << "Зарплата за месяц: " << PaymentForMonth() << endl << endl;
 	}
 	void ShowPension()
 	{
-		cout << "Имя: " << fio << endl << endl;
+		cout << endl << "Имя: " << fio << endl << endl;
 		cout << "Отчисления в пенсионный фонд: " << Pension() << endl << endl;
 	}
 	void ShowNDS()
 	{
-		cout << "Имя: " << fio << endl << endl;
-		cout << "Налог: " << NDS() << endl << endl;
+		cout << endl << "Имя: " << fio << endl << endl;
+		cout << "Налог: " << NDFL() << endl << endl;
 	}
 	void ShowInfo()
 	{
-		cout << "Имя: " << fio << endl << endl;
+		cout << endl << "Имя: " << fio << endl << endl;
 		cout << "Год поступления: " << *year << endl << endl;
 		cout << "Зарплата за месяц: " << PaymentForMonth() << endl << endl;
 		cout << "Отчисления в пенсионный фонд: " << Pension() << endl << endl;
-		cout << "Налог: " << NDS() << endl << endl;
+		cout << "Налог: " << NDFL() << endl << endl;
 	}
 
 	void setfio(char* fio)
@@ -146,6 +146,65 @@ public:
 		*(this->workday) = *workday;
 	}
 
-};
 
+	// Лаба 2
+
+	Payment& operator = (const Payment& Object)
+	{
+#ifdef DEBUG2
+		cout << "------Сработал оператор присваивания" << endl << endl;
+#endif 
+		this->~Payment();
+
+		fio = new char[strlen(Object.fio) + 1];
+
+		memcpy(this->fio, Object.fio, strlen(Object.fio) + 1);
+
+		salary = new int(*Object.salary);
+
+		year = new int(*Object.year);
+
+		workday = new int(*Object.workday);
+
+		return *this;
+	}
+	void operator + (int raise_salary)
+	{
+#ifdef DEBUG2
+		cout << "------Сработал оператор сложения" << endl << endl;
+#endif 
+		* salary = *salary + raise_salary;
+	}
+	void operator - (int raise_salary)
+	{
+#ifdef DEBUG2
+		cout << "------Сработал оператор вычитания" << endl << endl;
+#endif 
+		* salary = *salary - raise_salary;
+	}
+	void operator ++ (int val)  //*если принимает значение - постфиксная форма, если не принимает - префиксная
+	{
+#ifdef DEBUG2
+		cout << "------Сработал оператор инкремента" << endl << endl;
+#endif 
+		* year = *year + 1;
+	}
+	void operator -- (int val)
+	{
+#ifdef DEBUG2
+		cout << "------Сработал оператор декремента" << endl << endl;
+#endif
+		* year = *year - 1;
+	}
+	void operator () ()
+	{
+#ifdef DEBUG2
+		cout << "------Сработал оператор функиции" << endl << endl;
+#endif
+		Foo(*this);
+	}
+
+	friend void Foo(Payment& Object);
+
+};
 
