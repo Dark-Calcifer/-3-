@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <Windows.h>
 #include "Payment.h"
 
 using namespace std;
@@ -18,6 +19,8 @@ int Payment::prs = 100;
 int main()
 {
 	setlocale(LC_ALL, "Russian");
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251); 
 	int check_pause = false;
 	int choose = 0;
 	bool a = true;
