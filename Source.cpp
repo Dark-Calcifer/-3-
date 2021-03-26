@@ -3,7 +3,7 @@
 #if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 #define _CRT_SECURE_NO_WARNINGS
 #pragma warning(disable:4996)
-#endif  // для работы классических функций ("НЕБЕЗОПАСНЫХ!"_s)
+#endif  // для работы классических функций ("НЕБЕЗОПАСНЫХ"!_s)
 
 #include <iostream>
 #include <vector>
@@ -49,6 +49,12 @@ int main()
 		cout << "14) Добавить данные о работнике из файла" << endl;
 		cout << "0) Выход\n";
 		cin >> choose;
+		if (choose > 14 || choose < 0)
+		{
+			cout << "Пункта с таким номером нет, попробуйте еще раз" << endl << endl;
+			check_pause = true;
+			continue;
+		}
 		cout << endl;
 
 		switch (choose)
@@ -86,6 +92,12 @@ int main()
 			int NumOfWorker;
 			cout << "Введите номер работника (0 - всех)" << endl;
 			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
 			if (NumOfWorker == 0)
 			{
 				for (unsigned int i = 0; i < payvec.size(); i++)
@@ -102,6 +114,12 @@ int main()
 			int NumOfWorker;
 			cout << "Введите номер работника (0 - всех)" << endl;
 			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
 			if (NumOfWorker == 0)
 			{
 				for (unsigned int i = 0; i < payvec.size(); i++)
@@ -118,6 +136,12 @@ int main()
 			int NumOfWorker;
 			cout << "Введите номер работника (0 - всех)" << endl;
 			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
 			if (NumOfWorker == 0)
 			{
 				for (unsigned int i = 0; i < payvec.size(); i++)
@@ -134,6 +158,12 @@ int main()
 			int NumOfWorker;
 			cout << "Введите номер работника (0 - всех)" << endl;
 			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
 			if (NumOfWorker == 0)
 			{
 				for (unsigned int i = 0; i < payvec.size(); i++)
@@ -150,6 +180,12 @@ int main()
 			int NumOfWorker;
 			cout << "Введите номер работника (0 - всех)" << endl;
 			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
 			if (NumOfWorker == 0)
 			{
 				for (unsigned int i = 0; i < payvec.size(); i++)
@@ -176,10 +212,22 @@ int main()
 			int NumOfWorker1;
 			cout << "Введите номер работника которого нужно приравнять" << endl;
 			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
 			cout << "Введите номер работника к которому нужно приравнять" << endl;
 			cin >> NumOfWorker1;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
 			/*cout << "\t1ый (до): " << endl; payvec[NumOfWorker - 1].ShowInfo();
-			cout << "\t2ой (до): " << endl; payvec[NumOfWorker1 - 1].ShowInfo();*/
+			cout << "\t2ой (до): " << endl; payvec[NumOfWorker1 - 1].ShowInfo();*/   // "ДЕБАГ"
 
 			payvec[NumOfWorker - 1] = payvec[NumOfWorker1 - 1];
 
@@ -190,12 +238,24 @@ int main()
 		case(8): // изменить оклад
 		{
 			int NumOfWorker = 0;
-			int change_salary = 0;
+			int unsigned change_salary = 0;
 			int check = 0;
 			cout << "Введите номер работника " << endl;
 			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
 			cout << "Увелить(1) / уменьшить(2)" << endl;
 			cin >> check;
+			if (check !=1 || check != 2)
+			{
+				cout << "Введено неверное число" << endl;
+				check_pause = true;
+				break;
+			}
 			cout << "Насколько? " << endl;
 			cin >> change_salary;
 			if (check == 1)
@@ -215,8 +275,20 @@ int main()
 			int check = 0;
 			cout << "Введите номер работника " << endl;
 			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
 			cout << "Увеличить(1) / уменьшить(2)" << endl;
 			cin >> check;
+			if (check != 1 || check != 2)
+			{
+				cout << "Введено неверное число" << endl;
+				check_pause = true;
+				break;
+			}
 			if (check == 1)
 			{
 				payvec[NumOfWorker - 1]++;
@@ -233,6 +305,12 @@ int main()
 			int NumOfWorker;
 			cout << "Введите номер работника" << endl;
 			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
 			payvec[NumOfWorker - 1]();
 			check_pause = true;
 
@@ -243,6 +321,12 @@ int main()
 			int NumOfWorker;
 			cout << "Введите номер работника" << endl;
 			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
 			cout << payvec[NumOfWorker - 1] << endl;
 			break;
 		}
@@ -251,6 +335,12 @@ int main()
 			int NumOfWorker;
 			cout << "Введите номер работника (0 - новый работник)" << endl;
 			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
 			if (NumOfWorker != 0)
 			{
 				cin >> payvec[NumOfWorker - 1];
@@ -270,6 +360,12 @@ int main()
 			int NumOfWorker;
 			cout << "Введите номер работника" << endl;
 			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
 			cout << payvec[NumOfWorker - 1] << endl;
 			ofstream ofs;
 			ofs.open("MyFile.txt"/*, ofstream :: app*/);
@@ -289,6 +385,12 @@ int main()
 			int NumOfWorker;
 			cout << "Введите номер работника (0 - новый работник)" << endl;
 			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
 			ifstream ifs;
 			ifs.open("MyFile.txt");
 			if (NumOfWorker != 0)
