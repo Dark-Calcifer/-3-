@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include "Payment.h"
+#include <fstream>
 
 using namespace std;
 
@@ -44,6 +45,7 @@ int main()
 		cout << "10) Расчитать зарплату с вычетом процентов" << endl << endl;
 		cout << "11) Поместить в выходной поток / Вывод в поток" << endl;
 		cout << "12) Получить из входного потока / Ввод из потока" << endl;
+		cout << "13) Добавить данные о работнике в файл" << endl;
 		cout << "0) Выход\n";
 		cin >> choose;
 		cout << endl;
@@ -262,6 +264,25 @@ int main()
 			}
 			break;
 		}
+		case(13): // Добавить данные о работнике в файл
+		{
+			int NumOfWorker;
+			cout << "Введите номер работника" << endl;
+			cin >> NumOfWorker;
+			cout << payvec[NumOfWorker - 1] << endl;
+			ofstream ofs;
+			ofs.open("MyFile.txt", ofstream :: app);
+			if (ofs.is_open())
+			{
+				ofs << payvec[NumOfWorker - 1];
+			}
+			else
+			{
+				cout << "Файл не был открыт" << endl;
+			}
+
+			break;
+		}
 		case 0: // Выход
 		{
 			a = false;
@@ -318,3 +339,13 @@ istream& operator >> (istream& is, Payment& Object)
 
 	return is;
 }
+ofstream& operator << (ofstream& ofs, Payment& Object)
+{
+	ofs << "Имя: " << Object.fio << endl
+		<< "Год устройства: " << *Object.year << endl
+		<< "Отработанных дней: " << *Object.workday << endl
+		<< "Оклад за смену: " << *Object.salary << endl;
+	return ofs;
+}
+
+

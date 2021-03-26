@@ -12,6 +12,7 @@ private:
 	int* salary; // оклад за смену
 	int* year; // год устройства на работу
 	int* workday; // отработанных дней
+	int aasd = 100;
 
 
 public:
@@ -207,6 +208,8 @@ public:
 	friend ostream& operator << (ostream& os, Payment& Object);
 
 	friend istream& operator >> (istream& is, Payment& Object);
+
+	friend ofstream& operator << (ofstream& ofs, Payment& Object);
 
 };
 
