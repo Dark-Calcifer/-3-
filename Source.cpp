@@ -7,8 +7,8 @@
 
 #include <iostream>
 #include <vector>
-#include "Payment.h"
 #include <fstream>
+#include "Payment.h"
 
 using namespace std;
 
@@ -46,6 +46,7 @@ int main()
 		cout << "11) Поместить в выходной поток / Вывод в поток" << endl;
 		cout << "12) Получить из входного потока / Ввод из потока" << endl;
 		cout << "13) Добавить данные о работнике в файл" << endl;
+		cout << "14) Добавить данные о работнике из файла" << endl;
 		cout << "0) Выход\n";
 		cin >> choose;
 		cout << endl;
@@ -271,7 +272,7 @@ int main()
 			cin >> NumOfWorker;
 			cout << payvec[NumOfWorker - 1] << endl;
 			ofstream ofs;
-			ofs.open("MyFile.txt", ofstream :: app);
+			ofs.open("MyFile.txt"/*, ofstream :: app*/);
 			if (ofs.is_open())
 			{
 				ofs << payvec[NumOfWorker - 1];
@@ -281,6 +282,41 @@ int main()
 				cout << "Файл не был открыт" << endl;
 			}
 
+			break;
+		}
+		case(14):
+		{
+			int NumOfWorker;
+			cout << "Введите номер работника (0 - новый работник)" << endl;
+			cin >> NumOfWorker;
+			ifstream ifs;
+			ifs.open("MyFile.txt");
+			if (NumOfWorker != 0)
+			{
+				if (ifs.is_open())
+				{
+					ifs >> payvec[NumOfWorker - 1];
+				}
+				else
+				{
+					cout << "Файл не был открыт" << endl;
+				}
+				break;
+			}
+			if (NumOfWorker == 0)
+			{
+				Payment Person1;
+				if (ifs.is_open())
+				{
+					ifs >> Person1;
+					payvec.push_back(Person1);
+				}
+				else
+				{
+					cout << "Файл не был открыт" << endl;
+				}
+				break;
+			}
 			break;
 		}
 		case 0: // Выход
@@ -311,41 +347,6 @@ void Foo(Payment& Object) // Показывает зарплату с вычетом всех процентов
 	cout << i1 - (i2 + i3) << endl << endl;
 }
 
-ostream& operator << (ostream& os, Payment& Object)
-{
-	os << "Имя: " << Object.fio << endl
-	   << "Год устройства: " << *Object.year << endl
-	   << "Отработанных дней: " << *Object.workday << endl
-	   << "Оклад за смену: " << *Object.salary << endl;
-	return os;
-}
 
-istream& operator >> (istream& is, Payment& Object)
-{
-	cout << "Введите имя " << endl;
-	char A[100] = "";
-	is.ignore();
-	is.getline(A, 100);
-	Object.setfio(A);
-
-	cout << "Введите оплату за смену " << endl;
-	is >> *Object.salary;
-
-	cout << "Введите год " << endl;
-	is >> *Object.year;
-
-	cout << "Введите отработанные дни " << endl;
-	is >> *Object.workday;
-
-	return is;
-}
-ofstream& operator << (ofstream& ofs, Payment& Object)
-{
-	ofs << "Имя: " << Object.fio << endl
-		<< "Год устройства: " << *Object.year << endl
-		<< "Отработанных дней: " << *Object.workday << endl
-		<< "Оклад за смену: " << *Object.salary << endl;
-	return ofs;
-}
 
 

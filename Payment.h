@@ -211,5 +211,55 @@ public:
 
 	friend ofstream& operator << (ofstream& ofs, Payment& Object);
 
+	friend ifstream& operator >> (ifstream& ifs, Payment& Object);
+
 };
 
+ostream& operator << (ostream& os, Payment& Object)
+{
+	os << "Имя: " << Object.fio << endl
+		<< "Год устройства: " << *Object.year << endl
+		<< "Отработанных дней: " << *Object.workday << endl
+		<< "Оклад за смену: " << *Object.salary << endl;
+	return os;
+}
+
+istream& operator >> (istream& is, Payment& Object)
+{
+	cout << "Введите имя " << endl;
+	char A[100] = "";
+	is.ignore();
+	is.getline(A, 100);
+	Object.setfio(A);
+
+	cout << "Введите оплату за смену " << endl;
+	is >> *Object.salary;
+
+	cout << "Введите год " << endl;
+	is >> *Object.year;
+
+	cout << "Введите отработанные дни " << endl;
+	is >> *Object.workday;
+
+	return is;
+}
+ofstream& operator << (ofstream& ofs, Payment& Object)
+{
+	ofs << Object.fio << endl
+		<< *Object.year << endl
+		<< *Object.workday << endl
+	    << *Object.salary << endl;
+
+	return ofs;
+}
+ifstream& operator >> (ifstream& ifs, Payment& Object)
+{
+	char A[100] = "";
+	ifs.getline(A, 100);
+	Object.setfio(A);
+	ifs >> *Object.salary;
+	ifs >> *Object.year;
+	ifs >> *Object.workday;
+
+	return ifs;
+}
