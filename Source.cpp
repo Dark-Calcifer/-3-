@@ -34,6 +34,7 @@ int main()
 			system("cls");
 		}
 		check_pause = false;
+		checkdestr = true;
 		choose = 0;
 		cout << "\tВыберете пункт " << endl << endl;
 		cout << "1) Ввести данные сотрудника " << endl;
@@ -50,9 +51,11 @@ int main()
 		cout << "12) Получить из входного потока / Ввод из потока" << endl;
 		cout << "13) Добавить данные о работнике в файл" << endl;
 		cout << "14) Добавить данные о работнике из файла" << endl;
+		cout << "15) Запись в бинарный файл" << endl;
+		cout << "16) Добавить из бинарного файла" << endl;
 		cout << "0) Выход\n";
 		cin >> choose;
-		if (choose > 14 || choose < 0)
+		if (choose > 16 || choose < 0)
 		{
 			cout << "Пункта с таким номером нет, попробуйте еще раз" << endl << endl;
 			check_pause = true;
@@ -253,12 +256,6 @@ int main()
 			}
 			cout << "Увелить(1) / уменьшить(2)" << endl;
 			cin >> check;
-			if (check !=1 || check != 2)
-			{
-				cout << "Введено неверное число" << endl;
-				check_pause = true;
-				break;
-			}
 			cout << "Насколько? " << endl;
 			cin >> change_salary;
 			if (check == 1)
@@ -268,6 +265,12 @@ int main()
 			if (check == 2)
 			{
 				payvec[NumOfWorker - 1] - change_salary;
+			}
+			else
+			{
+				cout << "Введено неверное число" << endl;
+				check_pause = true;
+				break;
 			}
 
 			break;
@@ -286,12 +289,6 @@ int main()
 			}
 			cout << "Увеличить(1) / уменьшить(2)" << endl;
 			cin >> check;
-			if (check != 1 || check != 2)
-			{
-				cout << "Введено неверное число" << endl;
-				check_pause = true;
-				break;
-			}
 			if (check == 1)
 			{
 				payvec[NumOfWorker - 1]++;
@@ -299,6 +296,12 @@ int main()
 			if (check == 2)
 			{
 				payvec[NumOfWorker - 1]--;
+			}
+			else
+			{
+				cout << "Введено неверное число" << endl;
+				check_pause = true;
+				break;
 			}
 
 			break;
@@ -423,6 +426,92 @@ int main()
 				break;
 			}
 			break;
+		}
+		case(15): // запись в бинарный файл
+		{
+			int NumOfWorker;
+			cout << "Введите номер работника (0 - новый работник)" << endl;
+			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
+			else
+			{
+				if (NumOfWorker == 0)
+				{
+					Payment Person;
+
+					char A[100] = "";
+					int temp, temp1, temp2;
+
+					cout << "Введите ФИО " << endl;
+
+					cin.ignore();
+					cin.getline(A, 100);
+					Person.setfio(A);
+
+					cout << "Введите оплату за смену " << endl;
+					cin >> temp;
+					//cout << "Зарплата = 100 " << endl;
+					//temp = 100;
+					Person.setsalary(&temp);
+
+					cout << "Введите год " << endl;
+					cin >> temp1;
+					/*cout << "Год = 100 " << endl;
+					temp1 = 100;*/
+					Person.setyear(&temp1);
+
+					cout << "Введите отработанные дни " << endl;
+					cin >> temp2;
+					/*cout << "Отработанные дни = 100 " << endl;
+					temp2 = 100;*/
+					Person.setworkday(&temp2);
+
+					payvec.push_back(Person);
+					//checkdestr = false;
+					ToFile(payvec[payvec.size() - 1]);
+					break;
+				}
+				else
+				{
+					//checkdestr = false;
+					ToFile(payvec[NumOfWorker - 1]);
+					break;
+				}
+				break;
+			}
+			break;
+		}
+		case(16): // Добавить из бинарного файла
+		{
+			int NumOfWorker;
+			cout << "Введите номер работника (0 - новый работник)" << endl;
+			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
+			else
+			{
+				if (NumOfWorker == 0)
+				{
+					Payment worker;
+					checkdestr = false;
+					FromFile(worker);
+					payvec.push_back(worker);
+				}
+				else
+				{
+					FromFile(payvec[NumOfWorker - 1]);
+				}
+				break;
+			}
 		}
 		case 0: // Выход
 		{

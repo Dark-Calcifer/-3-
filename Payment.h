@@ -12,8 +12,6 @@ private:
 	int* salary; // оклад за смену
 	int* year; // год устройства на работу
 	int* workday; // отработанных дней
-	int aasd = 100;
-
 
 public:
 	static int ndfl;
@@ -213,6 +211,9 @@ public:
 
 	friend ifstream& operator >> (ifstream& ifs, Payment& Object);
 
+	friend void ToFile(Payment& worker);
+
+	friend void FromFile(Payment& worker);
 };
 
 ostream& operator << (ostream& os, Payment& Object)
@@ -262,4 +263,19 @@ ifstream& operator >> (ifstream& ifs, Payment& Object)
 	ifs >> *Object.workday;
 
 	return ifs;
+}
+
+void ToFile(Payment& worker)
+{ 
+		ofstream emp_file("employee.dat");
+		int qweqrdg = sizeof(Payment);
+		emp_file.write((char*)&worker, sizeof(Payment)); 
+}
+
+void FromFile(Payment& worker)
+{
+	ifstream emp_file("employee.dat");
+	emp_file.read((char*)&worker, sizeof(Payment));
+	worker.ShowInfo();
+
 }
