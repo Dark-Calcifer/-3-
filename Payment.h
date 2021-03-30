@@ -144,7 +144,7 @@ public:
 	}
 
 
-	// Ырср 2
+	// ----------------------------------Ырср 2----------------------------------
 
 	Payment& operator = (const Payment& Object)
 	{
@@ -203,7 +203,7 @@ public:
 
 	friend void Foo(Payment& Object);
 
-	// Ырср 3
+	// ----------------------------------Ырср 3----------------------------------
 
 	friend ostream& operator << (ostream& os, Payment& Object);
 
