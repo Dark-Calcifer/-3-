@@ -36,6 +36,7 @@ int main()
 		check_pause = false;
 		checkdestr = true;
 		choose = 0;
+		cout << " Колличество сотрудников: " << payvec.size() << endl << endl;
 		cout << "\tВыберете пункт " << endl << endl;
 		cout << "1) Ввести данные сотрудника " << endl;
 		cout << "2) Рассчитать зарплату " << endl;
@@ -91,6 +92,8 @@ int main()
 			Person.setworkday(&temp2);
 
 			payvec.push_back(Person);
+			cout << "Добавлено" << endl;
+			check_pause = true;
 			break;
 		}
 		case 2: // Рассчитать зарплату
@@ -201,6 +204,8 @@ int main()
 					checkdestr = false;
 				}
 				payvec.clear();
+				cout << "Удалено" << endl;
+				check_pause = true;
 			}
 			else
 			{
@@ -208,17 +213,22 @@ int main()
 				(payvec.begin() + NumOfWorker - 1)->~Payment();
 				checkdestr = false;
 				payvec.erase(payvec.begin() + NumOfWorker - 1);
+				cout << "Удалено" << endl;
+				check_pause = true;
 			}
 			checkdestr = true;
 			break;
 		}
+
+		// Лаба 2 
+
 		case(7): //Тест оператора присваивания
 		{
 			int NumOfWorker;
 			int NumOfWorker1;
 			cout << "Введите номер работника которого нужно приравнять" << endl;
 			cin >> NumOfWorker;
-			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			if (NumOfWorker > payvec.size() || NumOfWorker <= 0)
 			{
 				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
 				check_pause = true;
@@ -226,7 +236,7 @@ int main()
 			}
 			cout << "Введите номер работника к которому нужно приравнять" << endl;
 			cin >> NumOfWorker1;
-			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			if (NumOfWorker1 > payvec.size() || NumOfWorker1 <= 0)
 			{
 				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
 				check_pause = true;
@@ -236,6 +246,8 @@ int main()
 			cout << "\t2ой (до): " << endl; payvec[NumOfWorker1 - 1].ShowInfo();*/   // "ДЕБАГ"
 
 			payvec[NumOfWorker - 1] = payvec[NumOfWorker1 - 1];
+			cout << "Присвоено" << endl;
+			check_pause = true;
 
 			/*cout << "\t1ый (после): " << endl; payvec[NumOfWorker - 1].ShowInfo();
 			cout << "\t2ой (после): " << endl; payvec[NumOfWorker1 - 1].ShowInfo();*/
@@ -243,9 +255,9 @@ int main()
 		}
 		case(8): // изменить оклад
 		{
-			int NumOfWorker = 0;
-			int unsigned change_salary = 0;
-			int check = 0;
+			int NumOfWorker;
+			int unsigned change_salary;
+			int check;
 			cout << "Введите номер работника " << endl;
 			cin >> NumOfWorker;
 			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
@@ -261,10 +273,14 @@ int main()
 			if (check == 1)
 			{
 				payvec[NumOfWorker - 1] + change_salary;
+				cout << "Увеличено" << endl;
+				check_pause = true;
 			}
-			if (check == 2)
+			else if (check == 2)
 			{
 				payvec[NumOfWorker - 1] - change_salary;
+				cout << "Уменьшено" << endl;
+				check_pause = true;
 			}
 			else
 			{
@@ -292,10 +308,14 @@ int main()
 			if (check == 1)
 			{
 				payvec[NumOfWorker - 1]++;
+				cout << "Увеличено" << endl;
+				check_pause = true;
 			}
-			if (check == 2)
+			else if (check == 2)
 			{
 				payvec[NumOfWorker - 1]--;
+				cout << "Уменьшено" << endl;
+				check_pause = true;
 			}
 			else
 			{
@@ -311,7 +331,7 @@ int main()
 			int NumOfWorker;
 			cout << "Введите номер работника" << endl;
 			cin >> NumOfWorker;
-			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			if (NumOfWorker > payvec.size() || NumOfWorker <= 0)
 			{
 				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
 				check_pause = true;
@@ -322,12 +342,15 @@ int main()
 
 			break;
 		}
+
+		// Лаба 3
+
 		case(11): // Поместить в выходной поток / Вывод в поток
 		{
 			int NumOfWorker;
 			cout << "Введите номер работника" << endl;
 			cin >> NumOfWorker;
-			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			if (NumOfWorker > payvec.size() || NumOfWorker <= 0)
 			{
 				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
 				check_pause = true;
@@ -366,7 +389,7 @@ int main()
 			int NumOfWorker;
 			cout << "Введите номер работника" << endl;
 			cin >> NumOfWorker;
-			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			if (NumOfWorker > payvec.size() || NumOfWorker <= 0)
 			{
 				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
 				check_pause = true;
@@ -378,6 +401,8 @@ int main()
 			if (ofs.is_open())
 			{
 				ofs << payvec[NumOfWorker - 1];
+				cout << "Добавлено" << endl;
+				check_pause = true;
 			}
 			else
 			{
@@ -404,6 +429,8 @@ int main()
 				if (ifs.is_open())
 				{
 					ifs >> payvec[NumOfWorker - 1];
+					cout << "Добавлено" << endl;
+					check_pause = true;
 				}
 				else
 				{
@@ -418,6 +445,8 @@ int main()
 				{
 					ifs >> Person1;
 					payvec.push_back(Person1);
+					cout << "Добавлено" << endl;
+					check_pause = true;
 				}
 				else
 				{
@@ -474,12 +503,16 @@ int main()
 					payvec.push_back(Person);
 					//checkdestr = false;
 					ToFile(payvec[payvec.size() - 1]);
+					cout << "Добавлено" << endl;
+					check_pause = true;
 					break;
 				}
 				else
 				{
 					//checkdestr = false;
 					ToFile(payvec[NumOfWorker - 1]);
+					cout << "Добавлено" << endl;
+					check_pause = true;
 					break;
 				}
 				break;
@@ -505,10 +538,14 @@ int main()
 					checkdestr = false;
 					FromFile(worker);
 					payvec.push_back(worker);
+					cout << "Добавлено" << endl;
+					check_pause = true;
 				}
 				else
 				{
 					FromFile(payvec[NumOfWorker - 1]);
+					cout << "Добавлено" << endl;
+					check_pause = true;
 				}
 				break;
 			}

@@ -1,6 +1,6 @@
 #pragma once
-#define DEBUG
-#define DEBUG2
+//#define DEBUG
+//#define DEBUG2
 using namespace std;
 
 bool checkdestr = true;
@@ -202,6 +202,8 @@ public:
 	}
 
 	friend void Foo(Payment& Object);
+
+	// Ырср 3
 
 	friend ostream& operator << (ostream& os, Payment& Object);
 
