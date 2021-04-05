@@ -1,5 +1,5 @@
 #pragma once
-//#define DEBUG
+#define DEBUG
 //#define DEBUG2
 using namespace std;
 

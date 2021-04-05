@@ -10,6 +10,7 @@
 #include <fstream>
 #include <Windows.h>
 #include "Payment.h"
+#include "Employee.h"
 
 using namespace std;
 
@@ -60,7 +61,7 @@ int main()
 		cout << "16) Добавить из бинарного файла" << endl;
 		cout << "0) Выход\n";
 		cin >> choose;
-		if (choose > 16 || choose < 0)
+		if (choose > 17 || choose < 0)
 		{
 			cout << "Пункта с таким номером нет, попробуйте еще раз" << endl << endl;
 			check_pause = true;
@@ -553,6 +554,21 @@ int main()
 				}
 				break;
 			}
+		}
+		case 17:
+		{
+			Employee A1;
+			int a = 100;
+
+			char A[100] = "";
+			cout << "Введите должность " << endl;
+
+			cin.ignore();
+			cin.getline(A, 100);
+			A1.setincrease(&a);
+			A1.setposition(A);
+			A1.ShowPaymentForMonth();
+			A1.ShowInfo();
 		}
 		case 0: // Выход
 		{
