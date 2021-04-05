@@ -58,7 +58,9 @@ int main()
 		cout << "13) Добавить данные о работнике в файл" << endl;
 		cout << "14) Добавить данные о работнике из файла" << endl;
 		cout << "15) Запись в бинарный файл" << endl;
-		cout << "16) Добавить из бинарного файла" << endl;
+		cout << "16) Добавить из бинарного файла" << endl << endl;
+		cout << "\t(Лаба 4) " << endl;
+		cout << "17) Демонстрация класса \"сотрудник\"" << endl << endl;
 		cout << "0) Выход\n";
 		cin >> choose;
 		if (choose > 17 || choose < 0)
@@ -555,20 +557,78 @@ int main()
 				break;
 			}
 		}
-		case 17:
+		case 17: // демонстрация класса "сотрудник"
 		{
-			Employee A1;
-			int a = 100;
-
+			Employee employee;
+			int increase = 100;
 			char A[100] = "";
-			cout << "Введите должность " << endl;
 
-			cin.ignore();
-			cin.getline(A, 100);
-			A1.setincrease(&a);
-			A1.setposition(A);
-			A1.ShowPaymentForMonth();
-			A1.ShowInfo();
+			int NumOfWorker;
+			cout << "Введите номер работника (0 - новый работник)" << endl;
+			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
+			else
+			{
+				if (NumOfWorker == 0)
+				{
+					Payment Person;
+
+					char A[100] = "";
+					int temp, temp1, temp2;
+
+					cout << "Введите ФИО " << endl;
+
+					cin.ignore();
+					cin.getline(A, 100);
+					Person.setfio(A);
+
+					cout << "Введите оплату за смену " << endl;
+					cin >> temp;
+					Person.setsalary(&temp);
+
+					cout << "Введите год " << endl;
+					cin >> temp1;
+					Person.setyear(&temp1);
+
+					cout << "Введите отработанные дни " << endl;
+					cin >> temp2;
+					Person.setworkday(&temp2);
+
+					employee = Person;
+
+					cout << "Введите должность сотрудника " << endl;
+					cin.ignore();
+					cin.getline(A, 100);
+					cout << "надбавка 100 по умолчанию* " << endl;
+					employee.setincrease(&increase);
+					employee.setposition(A);
+					employee.ShowPaymentForMonth();
+					employee.ShowInfo();
+					payvec.push_back(employee);
+					cout << "Добавлено" << endl;
+					check_pause = true;
+				}
+				else
+				{
+					employee = payvec[NumOfWorker];
+					cout << "Введите должность " << endl;
+					cin.ignore();
+					cin.getline(A, 100);
+					cout << "надбавка 100 по умолчанию* " << endl;
+					employee.setincrease(&increase);
+					employee.setposition(A);
+					employee.ShowPaymentForMonth();
+					employee.ShowInfo();
+					cout << "Добавлено" << endl;
+					check_pause = true;
+				}
+				break;
+			}
 		}
 		case 0: // Выход
 		{

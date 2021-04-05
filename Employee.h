@@ -78,4 +78,15 @@ public:
 		cout << "Надбавка: " << *increase << endl << endl;
 		ShowPaymentForMonth();
 	}
+
+	Employee& operator = (const Payment& Object)
+	{
+#ifdef DEBUG2
+		cout << "------Сработал оператор присваивания" << endl << endl;
+#endif 
+
+		this-> Payment::Payment(Object);
+
+		return *this;
+	}
 };
