@@ -5,12 +5,17 @@
 #pragma warning(disable:4996)
 #endif  // для работы классических функций ("НЕБЕЗОПАСНЫХ"!_s)
 
+#define DEBUG
+#define DEBUG2
+#define DEBUG3
+
 #include <iostream>
 #include <vector>
 #include <fstream>
 #include <Windows.h>
 #include "Payment.h"
 #include "Employee.h"
+#include "Worker.h"
 
 using namespace std;
 
@@ -60,10 +65,11 @@ int main()
 		cout << "15) Запись в бинарный файл" << endl;
 		cout << "16) Добавить из бинарного файла" << endl << endl;
 		cout << "\t(Лаба 4) " << endl;
-		cout << "17) Демонстрация класса \"сотрудник\"" << endl << endl;
+		cout << "17) Демонстрация класса \"Employee\"" << endl;
+		cout << "18) Демонстрация класса \"Worker\"" << endl << endl;
 		cout << "0) Выход\n";
 		cin >> choose;
-		if (choose > 17 || choose < 0)
+		if (choose > 18 || choose < 0)
 		{
 			cout << "Пункта с таким номером нет, попробуйте еще раз" << endl << endl;
 			check_pause = true;
@@ -557,8 +563,12 @@ int main()
 				break;
 			}
 		}
-		case 17: // демонстрация класса "сотрудник"
+
+		// ----------------------------------Лаба 4----------------------------------
+
+		case 17: // демонстрация класса "Employee"
 		{
+			system("cls");
 			Employee employee;
 			int increase = 100;
 			char A[100] = "";
@@ -604,10 +614,11 @@ int main()
 					cout << "Введите должность сотрудника " << endl;
 					cin.ignore();
 					cin.getline(A, 100);
+					employee.setposition(A);
 					cout << "надбавка 100 по умолчанию* " << endl;
 					employee.setincrease(&increase);
 					employee.setposition(A);
-					employee.ShowPaymentForMonth();
+					//employee.ShowPaymentForMonth();
 					employee.ShowInfo();
 					payvec.push_back(employee);
 					cout << "Добавлено" << endl;
@@ -615,15 +626,96 @@ int main()
 				}
 				else
 				{
-					employee = payvec[NumOfWorker];
+					employee = payvec[NumOfWorker - 1];
 					cout << "Введите должность " << endl;
 					cin.ignore();
 					cin.getline(A, 100);
+					employee.setposition(A);
 					cout << "надбавка 100 по умолчанию* " << endl;
 					employee.setincrease(&increase);
 					employee.setposition(A);
-					employee.ShowPaymentForMonth();
+					//employee.ShowPaymentForMonth();
 					employee.ShowInfo();
+					cout << "Добавлено" << endl;
+					check_pause = true;
+				}
+				break;
+			}
+		}
+		case 18: // демонстрация класса "Worker"
+		{
+			system("cls");
+			Worker worker;
+			char A[100] = "";
+			int a1 = 1000;
+
+			int NumOfWorker;
+			cout << "Введите номер работника (0 - новый работник)" << endl;
+			cin >> NumOfWorker;
+			if (NumOfWorker > payvec.size() || NumOfWorker < 0)
+			{
+				cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+				check_pause = true;
+				break;
+			}
+			else
+			{
+				if (NumOfWorker == 0)
+				{
+					Payment Person;
+
+					char A[100] = "";
+					int temp, temp1, temp2;
+
+					cout << "Введите ФИО " << endl;
+
+					cin.ignore();
+					cin.getline(A, 100);
+					Person.setfio(A);
+
+					cout << "Введите оплату за смену " << endl;
+					cin >> temp;
+					Person.setsalary(&temp);
+
+					cout << "Введите год " << endl;
+					cin >> temp1;
+					Person.setyear(&temp1);
+
+					cout << "Введите отработанные дни " << endl;
+					cin >> temp2;
+					Person.setworkday(&temp2);
+
+					worker = Person;
+					int a2 = 9 * temp2;
+
+					cout << "Введите должность работника " << endl;
+					cin.ignore();
+					cin.getline(A, 100);
+					worker.setprofession(A);
+					cout << "ЗП/Ч = 1000 по умолчанию " << endl;
+					worker.setsalaryperhour(&a1);
+					cout << "Часов в день по умолчанию 9, дней в месяце в Payment" << endl;
+					worker.sethourpermonth(&a2);
+					//worker.ShowPaymentForMonth();
+					worker.ShowInfo();
+					payvec.push_back(worker);
+					cout << "Добавлено" << endl;
+					check_pause = true;
+				}
+				else
+				{
+					worker = payvec[NumOfWorker - 1];
+					int a2 = 9 * payvec[NumOfWorker - 1].returnworkday();
+					cout << "Введите должность " << endl;
+					cin.ignore();
+					cin.getline(A, 100);
+					worker.setprofession(A);
+					cout << "ЗП/Ч = 1000 по умолчанию " << endl;
+					worker.setsalaryperhour(&a1);
+					cout << "Часов в день по умолчанию 9, дней в месяце в Payment" << endl;
+					worker.sethourpermonth(&a2);
+					//worker.ShowPaymentForMonth();
+					worker.ShowInfo();
 					cout << "Добавлено" << endl;
 					check_pause = true;
 				}

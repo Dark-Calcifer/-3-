@@ -1,6 +1,4 @@
 #pragma once
-#define DEBUG
-//#define DEBUG2
 using namespace std;
 
 bool checkdestr = true;
@@ -77,6 +75,10 @@ public:
 		}
 	}
 
+	int returnworkday()
+	{
+		return *this->workday;
+	}
 	int PaymentForMonth()
 	{
 		int paymentformonth;
@@ -119,10 +121,19 @@ public:
 	void ShowInfo()
 	{
 		cout << endl << "Имя: " << fio << endl << endl;
+		cout << "Оклад за смену: " << *salary << endl << endl;
 		cout << "Год поступления: " << *year << endl << endl;
+		cout << "Отработанных дней: " << *workday << endl << endl;
 		cout << "Зарплата за месяц: " << PaymentForMonth() << endl << endl;
 		cout << "Отчисления в пенсионный фонд: " << Pension() << endl << endl;
 		cout << "Налог: " << NDFL() << endl << endl;
+	}
+	void ShowInfo(int i)
+	{
+		cout << endl << "Имя: " << fio << endl << endl;
+		cout << "Оклад за смену: " << *salary << endl << endl;
+		cout << "Год поступления: " << *year << endl << endl;
+		cout << "Отработанных дней: " << *workday << endl << endl;
 	}
 
 	void setfio(char* fio)
