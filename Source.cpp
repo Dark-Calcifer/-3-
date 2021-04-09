@@ -5,9 +5,9 @@
 #pragma warning(disable:4996)
 #endif  // для работы классических функций ("НЕБЕЗОПАСНЫХ"!_s)
 
-#define DEBUG
-#define DEBUG2
-#define DEBUG3
+//#define DEBUG
+//#define DEBUG2
+//#define DEBUG3
 
 #include <iostream>
 #include <vector>
@@ -16,6 +16,7 @@
 #include "Payment.h"
 #include "Employee.h"
 #include "Worker.h"
+#include "List.h"
 
 using namespace std;
 
@@ -700,6 +701,7 @@ int main()
 					worker.ShowInfo();
 					payvec.push_back(worker);
 					cout << "Добавлено" << endl;
+
 					check_pause = true;
 				}
 				else

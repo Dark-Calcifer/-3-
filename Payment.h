@@ -3,7 +3,7 @@ using namespace std;
 
 bool checkdestr = true;
 
-class Payment
+class Payment 
 {
 private:
 	char* fio; // фио
@@ -117,6 +117,10 @@ public:
 	{
 		cout << endl << "Имя: " << fio << endl << endl;
 		cout << "Налог: " << NDFL() << endl << endl;
+	}
+	void Showfio()
+	{
+		cout << endl << "Имя: " << fio << endl << endl;
 	}
 	void ShowInfo()
 	{
