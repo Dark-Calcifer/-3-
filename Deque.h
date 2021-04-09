@@ -1,101 +1,88 @@
-#pragma once
+#pragma once 
 
-template<typename T>
+template<typename W>
 class Deque
 {
+public:
+	Deque();
+	~Deque();
+
+	void pop_front();
+	void push_back(W& Object);
+	void clear();
+	int size() { return Size; }
+	W& operator[](const int index);
+	void pop_back();
+
 private:
-	template<typename T>
+	template<typename W>
 	class Node
 	{
-	public: 
+	public:
 		Node* pNext;
-		T data;
-		Node(T data = T(), Node* pNext = nullptr)
+		W Object;
+
+		Node(W& Object, Node* pNext = nullptr)
 		{
-			this->data = data;
+			this->Object = Object;
 			this->pNext = pNext;
 		}
 	};
-
 	int Size;
-	Node<T>* head;
-
-//-------------------------------------PUBLIC---------------------------------------
-
-public:
-	Deque();	
-	~Deque();
-	void push_back(T data);
-	void pop_front();
-	void pop_back();
-	void clear();
-	int GetSize() { return Size; }
-
-	T& operator[](const int index);
-
+	Node<W>* head;
 };
 
 
-
-
-template<typename T>
-inline Deque<T>::Deque()
+template<typename W>
+Deque<W>::Deque()
 {
 	Size = 0;
 	head = nullptr;
 }
 
-template<typename T>
-inline Deque<T>::~Deque()
+template<typename W>
+Deque<W>::~Deque()
 {
 	clear();
 }
 
-template<typename T>
-inline void Deque<T>::push_back(T data)
+
+template<typename W>
+void Deque<W>::pop_front()
+{
+	Node<W>* temp = head;
+
+	head = head->pNext;
+
+	delete temp;
+
+	Size--;
+
+}
+
+template<typename W>
+void Deque<W>::push_back(W& Object)
 {
 	if (head == nullptr)
 	{
-		head = new Node<T>(data);
+		head = new Node<W>(Object);
 	}
 	else
 	{
-		Node<T>* current = this->head;	
-		while (current->pNext != nullptr)
+		Node<W>* temp = this->head;
+
+		while (temp->pNext != nullptr)
 		{
-			current = current->pNext;
+			temp = temp->pNext;
 		}
-		current->pNext = new Node<T>(data);
+		temp->pNext = new Node<W>(Object);
 	}
+
 	Size++;
 }
 
-template<typename T>
-inline void Deque<T>::pop_front()
-{
-	Node<T>* temp = head;
-	head = head->pNext;
-	delete temp;
-	Size--;
-}
-
-template<typename T>
-inline void Deque<T>::pop_back()
-{
-	if (head != nullptr)
-	{
-		Node<T>* current = this->head;
-		while (current->pNext != nullptr)
-		{
-			current = current->pNext;
-		}
-		delete current->pNext;
-		Size--;
-	}
-}
-
-template<typename T>
-inline void Deque<T>::clear()
+template<typename W>
+void Deque<W>::clear()
 {
 	while (Size)
 	{
@@ -103,18 +90,37 @@ inline void Deque<T>::clear()
 	}
 }
 
-template<typename T>
-inline T& Deque<T>::operator[](const int index)
+template<typename W>
+W& Deque<W>::operator[](const int index)
 {
 	int counter = 0;
-	Node<T>* current = this->head;
-	while (current != nullptr)
+
+	Node<W>* temp = this->head;
+
+	while (temp != nullptr)
 	{
 		if (counter == index)
 		{
-			return current->data;
+			return temp->Object;
 		}
-		current = current->pNext;
+		temp = temp->pNext;
 		counter++;
 	}
+}
+
+template<typename W>
+void Deque<W>::pop_back()
+{
+	Node<W>* previous = this->head;
+		for (int i = 0; i < Size - 1; i++)
+		{
+			previous = previous->pNext;
+		}
+		Node<W>* toDelete = previous->pNext;
+
+		previous->pNext = toDelete->pNext;
+
+		delete toDelete;
+
+		Size--;
 }

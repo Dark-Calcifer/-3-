@@ -5,9 +5,9 @@
 #pragma warning(disable:4996)
 #endif  // для работы классических функций ("НЕБЕЗОПАСНЫХ"!_s)
 
-//#define DEBUG
-//#define DEBUG2
-//#define DEBUG3
+#define DEBUG
+#define DEBUG2
+#define DEBUG3
 
 #include <iostream>
 #include <vector>
@@ -16,7 +16,7 @@
 #include "Payment.h"
 #include "Employee.h"
 #include "Worker.h"
-#include "List.h"
+#include "Deque.h"
 
 using namespace std;
 
@@ -32,6 +32,27 @@ int main()
 	int choose = 0;
 	bool a = true;
 	vector<Payment>payvec;
+	Deque<Worker>paydeq;
+
+	/*bool ch = true;
+	while (ch)
+	{
+		Worker W;
+		int a = 999;
+		checkdestr = false;
+		W.setsalary(&a);
+		W.setworkday(&a);
+		W.setyear(&a);
+		W.setsalaryperhour(&a);
+		W.sethourpermonth(&a);
+
+		paydeq.push_back(W);
+
+		paydeq[0].ShowInfo();
+		system("pause");
+	}*/
+
+
 
 	while (a)
 	{
@@ -68,9 +89,11 @@ int main()
 		cout << "\t(Лаба 4) " << endl;
 		cout << "17) Демонстрация класса \"Employee\"" << endl;
 		cout << "18) Демонстрация класса \"Worker\"" << endl << endl;
+		cout << "\t(Лаба 4) " << endl;
+		cout << "19) Демонстрация работы дека" << endl;
 		cout << "0) Выход\n";
 		cin >> choose;
-		if (choose > 18 || choose < 0)
+		if (choose > 19 || choose < 0)
 		{
 			cout << "Пункта с таким номером нет, попробуйте еще раз" << endl << endl;
 			check_pause = true;
@@ -191,10 +214,10 @@ int main()
 			{
 				for (unsigned int i = 0; i < payvec.size(); i++)
 				{
-					payvec[i].ShowInfo();
+					payvec[i].ShowInfo(0);
 				}
 			}
-			else payvec[NumOfWorker - 1].ShowInfo();
+			else payvec[NumOfWorker - 1].ShowInfo(0);
 			check_pause = true;
 			break;
 		}
@@ -618,7 +641,6 @@ int main()
 					employee.setposition(A);
 					cout << "надбавка 100 по умолчанию* " << endl;
 					employee.setincrease(&increase);
-					employee.setposition(A);
 					//employee.ShowPaymentForMonth();
 					employee.ShowInfo();
 					payvec.push_back(employee);
@@ -723,6 +745,168 @@ int main()
 				}
 				break;
 			}
+		}
+		case 19:
+		{
+			system("cls");
+			bool check19 = true;
+			bool check_pause19 = false;
+			while (check19)
+			{
+				checkdestr = true;
+				check123 = true;
+				if (check_pause19)
+				{
+					system("pause");
+					system("cls");
+					check_pause19 = false;
+				}
+				cout << "1) Ввести данные сотрудника " << endl;
+				cout << "2) Показать информацию о сотруднике " << endl;
+				cout << "3) Удалить сотрудника" << endl << endl;
+				cout << "0) Выход\n";
+				int choose19;
+				cin >> choose19;
+				if (choose19 > 3 || choose19 < 0)
+				{
+					cout << "Пункта с таким номером нет, попробуйте еще раз" << endl << endl;
+					check_pause19 = true;
+					continue;
+				}
+				cout << endl;
+
+				switch (choose19)
+				{
+				case 1: // Ввести данные сотрудника
+				{
+					Worker Person;
+
+					char A[100] = "";
+					int temp, temp1, temp2;
+
+					cout << "Введите ФИО " << endl;
+
+					cin.ignore();
+					cin.getline(A, 100);
+					Person.setfio(A);
+
+					cout << "Введите оплату за смену " << endl;
+					cin >> temp;
+					Person.setsalary(&temp);
+
+					cout << "Введите год " << endl;
+					cin >> temp1;
+					Person.setyear(&temp1);
+
+					cout << "Введите отработанные дни " << endl;
+					cin >> temp2;
+					Person.setworkday(&temp2);
+
+					cout << "Зарегестрировать как Payment (1) / Employee(2) / Worker(3)? " << endl;
+					int r;
+					cin >> r;
+					if (r == 1){}
+					else if (r == 2)
+					{
+						int increase = 100;
+						char A1[100] = "";
+						cout << "Введите должность сотрудника " << endl;
+						cin.ignore();
+						cin.getline(A1, 100);
+						Person.setposition(A);
+						cout << "надбавка 100 по умолчанию* " << endl;
+						Person.setincrease(&increase);
+					}
+					else if (r == 3)
+					{
+						int a2 = 9 * temp2;
+						int a1 = 1000;
+						char A1[100] = "";
+						cout << "Введите должность работника " << endl;
+						cin.ignore();
+						cin.getline(A1, 100);
+						Person.setprofession(A1);
+						cout << "ЗП/Ч = 1000 по умолчанию " << endl;
+						Person.setsalaryperhour(&a1);
+						cout << "Часов в день по умолчанию 9, дней в месяце в Payment" << endl;
+						Person.sethourpermonth(&a2);
+					}
+					else
+					{
+						cout << "Введено неверное число." << endl;
+						check_pause19 = true;
+						continue;
+					}
+					check123 = false;
+					checkdestr = false;
+					paydeq.push_back(Person);
+					checkdestr = true;
+					Person.~Worker();
+					checkdestr = false;
+					cout << "Добавлено" << endl;
+					check_pause19 = true;
+					break;
+				}
+				case 2:  // Показать информацию о сотруднике
+				{
+					int NumOfWorker;
+					cout << "Введите номер работника (0 - всех)" << endl;
+					cin >> NumOfWorker;
+					if (NumOfWorker > paydeq.size() || NumOfWorker < 0)
+					{
+						cout << "Работника с таким номером нет, попробуйте еще раз" << endl;
+						check_pause19 = true;
+						break;
+					}
+					if (NumOfWorker == 0)
+					{
+						for (unsigned int i = 0; i < paydeq.size(); i++)
+						{
+							paydeq[i].ShowInfo();
+						}
+					}
+					else paydeq[NumOfWorker - 1].ShowInfo();
+					check_pause19 = true;
+					break;
+				}
+				case 3: // Удалить сотрудника
+				{
+					int check;
+					cout << "Удалить первого (1)/ Удалить последнего(2): " << endl;
+					cin >> check;
+					if (check == 1)
+					{
+						paydeq.pop_front();
+						cout << "Удалено" << endl;
+						check_pause19 = true;
+						break;
+					}
+					else if (check == 2)
+					{
+						paydeq.pop_back();
+						cout << "Удалено" << endl;
+						check_pause19 = true;
+						break;
+					}
+					else
+					{
+						cout << "Введено неверное число" << endl;
+						check_pause19 = true;
+						break;
+					}
+					break;
+				}
+				case 0:
+				{
+					check19 = false;
+					break;
+				}
+				default:
+					cout << "Повторите ввод" << endl;
+					break;
+				}
+			}
+			break;
 		}
 		case 0: // Выход
 		{

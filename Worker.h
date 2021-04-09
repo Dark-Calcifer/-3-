@@ -1,6 +1,8 @@
 #pragma once
 
-class Worker : public Payment
+bool check123 = true;
+
+class Worker : public Employee
 {
 private:
 	char* profession;
@@ -39,7 +41,6 @@ public:
 #ifdef DEBUG3
 		cout << "------Сработал конструктор копирования (Worker)" << endl << endl;
 #endif 
-
 		profession = new char[strlen(Object.profession) + 1];
 
 		memcpy(this->profession, Object.profession, strlen(Object.profession) + 1);
@@ -51,12 +52,15 @@ public:
 
 	~Worker()
 	{
+		if (checkdestr && check123)
+		{
 #ifdef DEBUG3
-		cout << "------Сработал деструктор (Worker)" << endl << endl;
+			cout << "------Сработал деструктор (Worker)" << endl << endl;
 #endif
-		delete[] this->profession;
-		delete this->salaryperhour;
-		delete this->hourpermonth;
+			delete[] this->profession;
+			delete this->salaryperhour;
+			delete this->hourpermonth;
+		}
 	}
 
 	void setprofession(char* profession)

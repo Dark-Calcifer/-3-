@@ -47,11 +47,14 @@ public:
 
 	~Employee()
 	{
+		if (checkdestr)
+		{
 #ifdef DEBUG3
-		cout << "------Сработал деструктор (Employee)" << endl << endl;
+			cout << "------Сработал деструктор (Employee)" << endl << endl;
 #endif
-		delete[] this->position;
-		delete this->increase;
+			delete[] this->position;
+			delete this->increase;
+		}
 	}
 
 

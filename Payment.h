@@ -25,7 +25,6 @@ public:
 		salary = new int(0); // оклад за смену
 		year = new int(0); // год устройства на работу
 		workday = new int(0); // отработанных дней
-
 	};
 
 	Payment(char* fio, int* salary, int* year, int* workday) // конструктор с параметрами
@@ -52,7 +51,6 @@ public:
 #endif 
 
 		fio = new char[strlen(Object.fio) + 1];
-
 		memcpy(this->fio, Object.fio, strlen(Object.fio) + 1);
 
 		salary = new int(*Object.salary);
@@ -131,6 +129,7 @@ public:
 		cout << "Зарплата за месяц: " << PaymentForMonth() << endl << endl;
 		cout << "Отчисления в пенсионный фонд: " << Pension() << endl << endl;
 		cout << "Налог: " << NDFL() << endl << endl;
+
 	}
 	void ShowInfo(int i)
 	{
