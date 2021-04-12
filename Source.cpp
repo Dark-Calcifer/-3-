@@ -751,10 +751,9 @@ int main()
 			system("cls");
 			bool check19 = true;
 			bool check_pause19 = false;
+			int PersonCounter[100] = {'\0'};
 			while (check19)
 			{
-				checkdestr = true;
-				check123 = true;
 				if (check_pause19)
 				{
 					system("pause");
@@ -805,6 +804,7 @@ int main()
 					cout << "Зарегестрировать как Payment (1) / Employee(2) / Worker(3)? " << endl;
 					int r;
 					cin >> r;
+
 					if (r == 1){}
 					else if (r == 2)
 					{
@@ -813,7 +813,7 @@ int main()
 						cout << "Введите должность сотрудника " << endl;
 						cin.ignore();
 						cin.getline(A1, 100);
-						Person.setposition(A);
+						Person.setposition(A1);
 						cout << "надбавка 100 по умолчанию* " << endl;
 						Person.setincrease(&increase);
 					}
@@ -837,12 +837,8 @@ int main()
 						check_pause19 = true;
 						continue;
 					}
-					check123 = false;
-					checkdestr = false;
 					paydeq.push_back(Person);
-					checkdestr = true;
-					Person.~Worker();
-					checkdestr = false;
+					PersonCounter[paydeq.size() - 1] = r;
 					cout << "Добавлено" << endl;
 					check_pause19 = true;
 					break;
@@ -862,10 +858,10 @@ int main()
 					{
 						for (unsigned int i = 0; i < paydeq.size(); i++)
 						{
-							paydeq[i].ShowInfo();
+							paydeq[i].ShowInfo(PersonCounter[i]);
 						}
 					}
-					else paydeq[NumOfWorker - 1].ShowInfo();
+					else paydeq[NumOfWorker - 1].ShowInfo(PersonCounter[NumOfWorker - 1]);
 					check_pause19 = true;
 					break;
 				}
@@ -878,6 +874,11 @@ int main()
 					{
 						paydeq.pop_front();
 						cout << "Удалено" << endl;
+						for (int i = 0; i < paydeq.size() - 1; i++)
+						{
+							PersonCounter[i] = PersonCounter[i + 1];
+						}
+						PersonCounter[paydeq.size() - 1] = '\0';
 						check_pause19 = true;
 						break;
 					}

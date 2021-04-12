@@ -102,6 +102,14 @@ public:
 
 	}
 
+	void ShowInfo(int i)
+	{
+		cout << "Должность: " << position << endl << endl;
+		cout << "Надбавка: " << *increase << endl << endl;
+		cout << "Отчисления в пенсионный фонд: " << Pension() << endl << endl;
+		cout << "Налог: " << NDFL() << endl << endl;
+	}
+
 	Employee& operator = (const Payment& Object)
 	{
 #ifdef DEBUG3

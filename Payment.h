@@ -116,10 +116,6 @@ public:
 		cout << endl << "Èìÿ: " << fio << endl << endl;
 		cout << "Íàëîã: " << NDFL() << endl << endl;
 	}
-	void Showfio()
-	{
-		cout << endl << "Èìÿ: " << fio << endl << endl;
-	}
 	void ShowInfo()
 	{
 		cout << endl << "Èìÿ: " << fio << endl << endl;

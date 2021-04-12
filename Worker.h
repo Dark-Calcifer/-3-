@@ -100,17 +100,52 @@ public:
 	}
 	void ShowPaymentForMonth()
 	{
-		cout << endl << "Должность: " << profession << endl << endl;
+		//cout << endl << "Должность: " << profession << endl << endl;
 		cout << "Зарплата за месяц: " << PaymentForMonth() << endl << endl;
 	}
 	void ShowInfo()
 	{
 		Payment::ShowInfo(0);
+		cout << endl << "Должность: " << profession << endl << endl;
 		ShowPaymentForMonth();
 		cout << "Зарплата за час: " << *salaryperhour << endl << endl;
 		cout << "Часов в месяц: " << *hourpermonth << endl << endl;
 		cout << "Отчисления в пенсионный фонд: " << Pension() << endl << endl;
 		cout << "Налог: " << NDFL() << endl << endl;
+	}
+	int ShowInfo(int i)
+	{
+		if (i == 1)
+		{
+			Payment::ShowInfo(0);
+			return 0;
+		}
+		else if (i == 2)
+		{
+			Payment::ShowInfo(0);
+			Employee::ShowInfo(0);
+			Employee::ShowPaymentForMonth();
+			return 0;
+		}
+		else if (i == 3)
+		{
+			Payment::ShowInfo(0);
+			ShowInfo(0);
+			return 0;
+		}
+		else if (i == 0)
+		{
+			cout << "Должность: " << profession << endl << endl;
+			cout << "Зарплата за час: " << *salaryperhour << endl << endl;
+			cout << "Часов в месяц: " << *hourpermonth << endl << endl;
+			ShowPaymentForMonth();
+			return 0;
+		}
+		else
+		{
+			return 0;
+		}
+		return 0;
 	}
 	Worker& operator = (const Payment& Object)
 	{
@@ -119,6 +154,28 @@ public:
 #endif 
 
 		this->Payment::Payment(Object);
+
+		return *this;
+	}
+
+	Worker& operator = (const Worker& Object)
+	{
+#ifdef DEBUG3
+		cout << "------Сработал оператор присваивания(Worker2)" << endl << endl;
+#endif 
+		this->Employee::Employee(Object);
+		this->Payment::Payment(Object);
+		int i = 0;
+		while (Object.profession[i] != '\0')
+		{
+			cout << "TEST profrssion copy: " << endl;
+			cout << Object.profession[i] << endl;
+			this->profession[i] = Object.profession[i];
+			i++;
+		}
+		this->profession[i] = '\0';
+		*this->salaryperhour = *Object.salaryperhour;
+		*this->hourpermonth = *Object.hourpermonth;
 
 		return *this;
 	}

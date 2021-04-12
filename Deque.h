@@ -61,11 +61,13 @@ void Deque<W>::pop_front()
 }
 
 template<typename W>
-void Deque<W>::push_back(W& Object)
+void Deque<W>::push_back(W& const Object)
 {
+	Worker TEMP;
+	TEMP = Object;
 	if (head == nullptr)
 	{
-		head = new Node<W>(Object);
+		head = new Node<W>(TEMP);
 	}
 	else
 	{
@@ -75,7 +77,7 @@ void Deque<W>::push_back(W& Object)
 		{
 			temp = temp->pNext;
 		}
-		temp->pNext = new Node<W>(Object);
+		temp->pNext = new Node<W>(TEMP);
 	}
 
 	Size++;
