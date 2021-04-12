@@ -1,13 +1,15 @@
 // Лабораторная работа 5 (3 семестр)
 
+// код к ЛР5 начинается на 752 строчке + Deque.h 
+
 #if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 #define _CRT_SECURE_NO_WARNINGS
 #pragma warning(disable:4996)
 #endif  // для работы классических функций ("НЕБЕЗОПАСНЫХ"!_s)
 
-#define DEBUG
-#define DEBUG2
-#define DEBUG3
+//#define DEBUG
+//#define DEBUG2
+//#define DEBUG3
 
 #include <iostream>
 #include <vector>
@@ -749,7 +751,7 @@ int main()
 
 		// ----------------------------------Лаба 5----------------------------------
 
-		case 19:
+		case 19: // Демонстрация работы дека
 		{
 			system("cls");
 			bool check19 = true;

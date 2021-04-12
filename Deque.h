@@ -50,13 +50,16 @@ Deque<W>::~Deque()
 template<typename W>
 void Deque<W>::pop_front()
 {
-	Node<W>* temp = head;
+	if (Size > 0)
+	{
+		Node<W>* temp = head;
 
-	head = head->pNext;
+		head = head->pNext;
 
-	delete temp;
+		delete temp;
 
-	Size--;
+		Size--;
+	}
 
 }
 
@@ -113,7 +116,9 @@ W& Deque<W>::operator[](const int index)
 template<typename W>
 void Deque<W>::pop_back()
 {
-	Node<W>* previous = this->head;
+	if (Size > 0)
+	{
+		Node<W>* previous = this->head;
 		for (int i = 0; i < Size - 1; i++)
 		{
 			previous = previous->pNext;
@@ -125,4 +130,5 @@ void Deque<W>::pop_back()
 		delete toDelete;
 
 		Size--;
+	}
 }
