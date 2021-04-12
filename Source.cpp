@@ -878,11 +878,11 @@ int main()
 					{
 						paydeq.pop_front();
 						cout << "Удалено" << endl;
-						for (int i = 0; i < paydeq.size() - 1; i++)
+						for (int i = 0; i < paydeq.size(); i++)
 						{
 							PersonCounter[i] = PersonCounter[i + 1];
 						}
-						PersonCounter[paydeq.size() - 1] = '\0';
+						PersonCounter[paydeq.size()] = '\0';
 						check_pause19 = true;
 						break;
 					}
@@ -890,7 +890,7 @@ int main()
 					{
 						paydeq.pop_back();
 						cout << "Удалено" << endl;
-						PersonCounter[paydeq.size() - 1] = '\0';
+						PersonCounter[paydeq.size()] = '\0';
 						check_pause19 = true;
 						break;
 					}
