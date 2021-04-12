@@ -746,6 +746,9 @@ int main()
 				break;
 			}
 		}
+
+		// ----------------------------------Лаба 5----------------------------------
+
 		case 19:
 		{
 			system("cls");
@@ -760,6 +763,7 @@ int main()
 					system("cls");
 					check_pause19 = false;
 				}
+				cout << "Количество объектов в деке: " << paydeq.size() << endl << endl;
 				cout << "1) Ввести данные сотрудника " << endl;
 				cout << "2) Показать информацию о сотруднике " << endl;
 				cout << "3) Удалить сотрудника" << endl << endl;
@@ -814,7 +818,7 @@ int main()
 						cin.ignore();
 						cin.getline(A1, 100);
 						Person.setposition(A1);
-						cout << "надбавка 100 по умолчанию* " << endl;
+						cout << "Надбавка 100 по умолчанию* " << endl;
 						Person.setincrease(&increase);
 					}
 					else if (r == 3)
@@ -886,6 +890,7 @@ int main()
 					{
 						paydeq.pop_back();
 						cout << "Удалено" << endl;
+						PersonCounter[paydeq.size() - 1] = '\0';
 						check_pause19 = true;
 						break;
 					}

@@ -120,7 +120,7 @@ void Deque<W>::pop_back()
 		}
 		Node<W>* toDelete = previous->pNext;
 
-		previous->pNext = toDelete->pNext;
+		previous->pNext = nullptr;
 
 		delete toDelete;
 

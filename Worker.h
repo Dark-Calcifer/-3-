@@ -125,6 +125,7 @@ public:
 			Payment::ShowInfo(0);
 			Employee::ShowInfo(0);
 			Employee::ShowPaymentForMonth();
+			cout << endl;
 			return 0;
 		}
 		else if (i == 3)
@@ -139,6 +140,7 @@ public:
 			cout << "Зарплата за час: " << *salaryperhour << endl << endl;
 			cout << "Часов в месяц: " << *hourpermonth << endl << endl;
 			ShowPaymentForMonth();
+			cout << endl;
 			return 0;
 		}
 		else
@@ -161,15 +163,13 @@ public:
 	Worker& operator = (const Worker& Object)
 	{
 #ifdef DEBUG3
-		cout << "------Сработал оператор присваивания(Worker2)" << endl << endl;
+		cout << "------Сработал оператор присваивания(Worker = Worker)" << endl << endl;
 #endif 
 		this->Employee::Employee(Object);
 		this->Payment::Payment(Object);
 		int i = 0;
 		while (Object.profession[i] != '\0')
 		{
-			cout << "TEST profrssion copy: " << endl;
-			cout << Object.profession[i] << endl;
 			this->profession[i] = Object.profession[i];
 			i++;
 		}
