@@ -1,6 +1,4 @@
-// Лабораторная работа 5 (3 семестр)
-
-// код к ЛР5 начинается на 752 строчке + Deque.h 
+// Лабораторная работа 6 (3 семестр)
 
 #if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 #define _CRT_SECURE_NO_WARNINGS
