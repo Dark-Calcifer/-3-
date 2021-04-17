@@ -8,15 +8,20 @@
 //#define DEBUG
 //#define DEBUG2
 //#define DEBUG3
+//#define OldLab
+#define Lab6
 
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <regex>
 #include <Windows.h>
 #include "Payment.h"
 #include "Employee.h"
 #include "Worker.h"
 #include "Deque.h"
+#include "Exception.h"
+#include "MemException.h"
 
 using namespace std;
 
@@ -34,26 +39,14 @@ int main()
 	vector<Payment>payvec;
 	Deque<Worker>paydeq;
 
-	/*bool ch = true;
-	while (ch)
-	{
-		Worker W;
-		int a = 999;
-		checkdestr = false;
-		W.setsalary(&a);
-		W.setworkday(&a);
-		W.setyear(&a);
-		W.setsalaryperhour(&a);
-		W.sethourpermonth(&a);
+	//bool ch = true;
+	//while (ch)
+	//{
 
-		paydeq.push_back(W);
+	//	system("pause");
+	//}
 
-		paydeq[0].ShowInfo();
-		system("pause");
-	}*/
-
-
-
+#ifdef OldLab
 	while (a)
 	{
 		if (check_pause)
@@ -754,7 +747,7 @@ int main()
 			system("cls");
 			bool check19 = true;
 			bool check_pause19 = false;
-			int PersonCounter[100] = {'\0'};
+			int PersonCounter[100] = { '\0' };
 			while (check19)
 			{
 				if (check_pause19)
@@ -809,7 +802,7 @@ int main()
 					int r;
 					cin >> r;
 
-					if (r == 1){}
+					if (r == 1) {}
 					else if (r == 2)
 					{
 						int increase = 100;
@@ -925,8 +918,253 @@ int main()
 		}
 
 	}
-	return 0;
+#endif // OldLab
 
+	// ----------------------------------Лаба 6----------------------------------
+
+#ifdef Lab6
+
+	system("cls");
+	bool check19 = true;
+	bool check_pause19 = false;
+	int PersonCounter[100] = { '\0' };
+	bool IsItInt(char const* A1);
+	void PrintEx();
+	while (check19)
+	{
+		if (check_pause19)
+		{
+			system("pause");
+			system("cls");
+			check_pause19 = false;
+		}
+		cout << "Введите лимит памяти в байтах (1 объект ~ 36 байт)" << endl;
+		char Temp[100] = "";
+		cin.getline(Temp, 100);
+		try
+		{
+			if (!IsItInt(Temp))
+			{
+				int MaxMem = atoi(Temp);
+			}
+			else
+			{
+				Exception ex("Введенное значение не является числом");
+				throw ex;
+				break;
+			}
+		}
+		catch (Exception& exc)
+		{
+			PrintEx();
+			cout << exc.GetDescription() << endl;
+			check_pause19 = true;
+			continue;
+		}
+		cout << "Количество объектов: " << paydeq.size() << endl << endl;
+		cout << "1) Ввести данные сотрудника " << endl;
+		cout << "2) Показать информацию о сотруднике " << endl;
+		cout << "3) Показать размер дека " << endl;
+		cout << "0) Выход\n";
+		int choose19;
+		cin >> choose19;
+		if (choose19 > 4 || choose19 < 0)
+		{
+			cout << "Пункта с таким номером нет, попробуйте еще раз" << endl << endl;
+			check_pause19 = true;
+			continue;
+		}
+		cout << endl;
+
+		switch (choose19)
+		{
+		case 1: // Ввести данные сотрудника
+		{
+			Worker Person;
+
+			char A[100] = "";
+			int temp, temp1, temp2;
+
+			// ------------------------------------Ввод ФИО
+			cout << "Введите ФИО " << endl;
+			cin.ignore();
+			cin.getline(A, 100);
+			Person.setfio(A);
+			// ------------------------------------Ввод оплаты
+			char A1[100] = "";
+			cout << "Введите оплату за смену " << endl;
+			cin.getline(A1, 100);
+			try
+			{
+				if (IsItInt(A1))
+				{
+					Exception ex("Введенное значение не является числом");
+					throw ex;
+					break;
+				}
+				else
+				{
+					temp = atoi(A1);
+					Person.setsalary(&temp);
+				}
+			}
+			catch (Exception ex)
+			{
+				PrintEx();
+				cout << ex.GetDescription() << endl;
+				check_pause19 = true;
+				break;
+			}
+			// ------------------------------------Ввод года
+			char A2[100] = "";
+			cout << "Введите год " << endl;
+			cin.getline(A2, 100);
+			try
+			{
+				if (IsItInt(A2))
+				{
+					Exception ex("Введенное значение не является числом");
+					throw ex;
+					break;
+				}
+
+				else
+				{
+					temp1 = atoi(A2);
+					Person.setyear(&temp1);
+				}
+			}
+			catch (Exception ex)
+			{
+				PrintEx();
+				cout << ex.GetDescription() << endl;
+				check_pause19 = true;
+				break;
+			}
+			// ------------------------------------Ввод дней
+			char A3[100] = "";
+			cout << "Введите отработанные дни " << endl;
+			cin.getline(A3, 100);
+			try
+			{
+				if (IsItInt(A3))
+				{
+					Exception ex("Введенное значение не является числом");
+					throw ex;
+					break;
+				}
+
+				else
+				{
+					temp2 = atoi(A3);
+					Person.setworkday(&temp2);
+				}
+			}
+			catch (Exception ex)
+			{
+				PrintEx();
+				cout << ex.GetDescription() << endl;
+				check_pause19 = true;
+				break;
+			}
+			// ------------------------------------Ввод r
+			cout << "Зарегестрировать как Payment (1) / Employee(2) / Worker(3)? " << endl;
+			char A4[100] = "";
+			cin.getline(A4, 100);
+			int r;
+			r = atoi(A4);
+			if (r == 1) {}
+			else if (r == 2)
+			{
+				int increase = 100;
+				char A1[100] = "";
+				cout << "Введите должность сотрудника " << endl;
+				cin.ignore();
+				cin.getline(A1, 100);
+				Person.setposition(A1);
+				cout << "Надбавка 100 по умолчанию* " << endl;
+				Person.setincrease(&increase);
+			}
+			else if (r == 3)
+			{
+				int a2 = 9 * temp2;
+				int a1 = 1000;
+				char A1[100] = "";
+				cout << "Введите должность работника " << endl;
+				cin.ignore();
+				cin.getline(A1, 100);
+				Person.setprofession(A1);
+				cout << "ЗП/Ч = 1000 по умолчанию " << endl;
+				Person.setsalaryperhour(&a1);
+				cout << "Часов в день по умолчанию 9, дней в месяце в Payment" << endl;
+				Person.sethourpermonth(&a2);
+			}
+			else
+			{
+				cout << "Введено неверное число." << endl;
+				check_pause19 = true;
+				continue;
+			}
+			paydeq.push_back(Person);
+			PersonCounter[paydeq.size() - 1] = r;
+			cout << "Добавлено" << endl;
+			check_pause19 = true;
+			break;
+		}
+
+		case 2:  // Показать информацию о сотруднике
+		{
+			int NumOfWorker;
+			cout << "Введите номер работника (0 - всех)" << endl;
+			cin >> NumOfWorker;
+			try
+			{
+				if (NumOfWorker > paydeq.size() || NumOfWorker < 0)
+				{
+					MemException ex;
+					throw ex;
+				}
+				else if (NumOfWorker == 0)
+				{
+					for (unsigned int i = 0; i < paydeq.size(); i++)
+					{
+						paydeq[i].ShowInfo(PersonCounter[i]);
+					}
+				}
+				else paydeq[NumOfWorker - 1].ShowInfo(PersonCounter[NumOfWorker - 1]);
+				check_pause19 = true;
+			}
+			catch (MemException& ex)
+			{
+				PrintEx();
+				cout << ex.GetDescription() <<  endl;
+			}
+			break;
+		}
+
+		case 3:
+		{
+			int deqsize = 0;
+			for (int i = 0; i < paydeq.size(); i++)
+			{
+				deqsize = deqsize + sizeof(paydeq[i]);
+			}
+			cout << "Дек занимает места: " << deqsize << endl;
+			break;
+		}
+		case 0:
+		{
+			check19 = false;
+			break;
+		}
+		default:
+			cout << "Повторите ввод" << endl;
+			break;
+		}
+	}
+
+#endif // Lab6
+	return 0;
 }
 
 void Foo(Payment& Object) // Показывает зарплату с вычетом всех процентов
@@ -942,6 +1180,13 @@ void Foo(Payment& Object) // Показывает зарплату с вычетом всех процентов
 	cout << i1 - (i2 + i3) << endl << endl;
 }
 
-
+bool IsItInt(char const* A1)
+{
+	return !regex_match(A1, regex("([0-9]*)"));
+}
+void PrintEx()
+{
+	cout << "----------Сработал обработчик исключительных ситуаций----------" << endl;
+}
 
 

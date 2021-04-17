@@ -143,6 +143,8 @@
   <ItemGroup>
     <ClInclude Include="Employee.h" />
     <ClInclude Include="Deque.h" />
+    <ClInclude Include="Exception.h" />
+    <ClInclude Include="MemException.h" />
     <ClInclude Include="Payment.h" />
     <ClInclude Include="Worker.h" />
   </ItemGroup>
