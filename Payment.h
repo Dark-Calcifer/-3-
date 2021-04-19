@@ -211,6 +211,8 @@ public:
 		Foo(*this);
 	}
 
+	int main();
+
 	friend void Foo(Payment& Object);
 
 	// ----------------------------------Ырср 3----------------------------------

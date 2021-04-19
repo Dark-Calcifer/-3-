@@ -1,5 +1,12 @@
 // Лабораторная работа 6 (3 семестр)
 
+// Код ЛР6 начинается с 926 строчки + Exception.h + MemException.h + OutOfRangeEx.h
+
+// при попытке присвоить в переменную типа int другой тип данных сработает - исключение
+// при попытке обратиться к неиницилизированной памяти/выйти за пределы контейнера - срабатывает исключение
+// если привысить указанный лимит памяти - сработает исключение
+// при попытке указать лимит памяти меньше, чем в данный момент используется (под объекты) - срабатывает исключение
+
 #if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 #define _CRT_SECURE_NO_WARNINGS
 #pragma warning(disable:4996)
@@ -22,6 +29,7 @@
 #include "Deque.h"
 #include "Exception.h"
 #include "MemException.h"
+#include "OutOfRangeEx.h"
 
 using namespace std;
 
@@ -32,7 +40,7 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251); 
+	SetConsoleOutputCP(1251);
 	int check_pause = false;
 	int choose = 0;
 	bool a = true;
@@ -923,13 +931,15 @@ int main()
 	// ----------------------------------Лаба 6----------------------------------
 
 #ifdef Lab6
-
+	
 	system("cls");
 	bool check19 = true;
 	bool check_pause19 = false;
 	int PersonCounter[100] = { '\0' };
 	bool IsItInt(char const* A1);
 	void PrintEx();
+	int deqsizefunc(Deque<Worker>& const paydeq);
+	int MaxMem = 1000;
 	while (check19)
 	{
 		if (check_pause19)
@@ -938,37 +948,14 @@ int main()
 			system("cls");
 			check_pause19 = false;
 		}
-		cout << "Введите лимит памяти в байтах (1 объект ~ 36 байт)" << endl;
-		char Temp[100] = "";
-		cin.getline(Temp, 100);
-		try
-		{
-			if (!IsItInt(Temp))
-			{
-				int MaxMem = atoi(Temp);
-			}
-			else
-			{
-				Exception ex("Введенное значение не является числом");
-				throw ex;
-				break;
-			}
-		}
-		catch (Exception& exc)
-		{
-			PrintEx();
-			cout << exc.GetDescription() << endl;
-			check_pause19 = true;
-			continue;
-		}
-		cout << "Количество объектов: " << paydeq.size() << endl << endl;
-		cout << "1) Ввести данные сотрудника " << endl;
+		cout << "Количество объектов: " << paydeq.size() << " (Занято памяти: " << deqsizefunc(paydeq) << " из " <<  MaxMem << ")" << endl << endl;
+		cout << "1) Добавить сотрудника " << endl;
 		cout << "2) Показать информацию о сотруднике " << endl;
-		cout << "3) Показать размер дека " << endl;
+		cout << "3) Задать лимит памяти для хранения объекта " << endl << endl;
 		cout << "0) Выход\n";
 		int choose19;
 		cin >> choose19;
-		if (choose19 > 4 || choose19 < 0)
+		if (choose19 > 3 || choose19 < 0)
 		{
 			cout << "Пункта с таким номером нет, попробуйте еще раз" << endl << endl;
 			check_pause19 = true;
@@ -980,6 +967,20 @@ int main()
 		{
 		case 1: // Ввести данные сотрудника
 		{
+			try
+			{
+				if (deqsizefunc(paydeq) + 36 >= MaxMem)
+				{
+					MemException ex(1);
+					throw ex;
+				}
+			}
+			catch (MemException ex)
+			{
+				PrintEx();
+				cout << ex.GetDescription() << " Code: " << ex.code() << endl;
+				break;
+			}
 			Worker Person;
 
 			char A[100] = "";
@@ -1096,7 +1097,7 @@ int main()
 				Person.setprofession(A1);
 				cout << "ЗП/Ч = 1000 по умолчанию " << endl;
 				Person.setsalaryperhour(&a1);
-				cout << "Часов в день по умолчанию 9, дней в месяце в Payment" << endl;
+				cout << "Часов в день по умолчанию 9, рабочих дней в месяце в Payment" << endl;
 				Person.sethourpermonth(&a2);
 			}
 			else
@@ -1121,7 +1122,7 @@ int main()
 			{
 				if (NumOfWorker > paydeq.size() || NumOfWorker < 0)
 				{
-					MemException ex;
+					OutOfRangeEx ex("Попытка выходы за пределы выделенной памяти", "paydeq[]");
 					throw ex;
 				}
 				else if (NumOfWorker == 0)
@@ -1134,24 +1135,65 @@ int main()
 				else paydeq[NumOfWorker - 1].ShowInfo(PersonCounter[NumOfWorker - 1]);
 				check_pause19 = true;
 			}
-			catch (MemException& ex)
+			catch (OutOfRangeEx & ex)
 			{
 				PrintEx();
-				cout << ex.GetDescription() <<  endl;
+				cout << ex.GetDescription() << endl << "Предположительно ";
+				ex.ShowSpace();
+				check_pause19 = true;
+				break;
 			}
+
 			break;
 		}
 
-		case 3:
+		case 3: // Задать лимит памяти
 		{
-			int deqsize = 0;
-			for (int i = 0; i < paydeq.size(); i++)
+			cout << "Введите лимит памяти в байтах (1 объект 36 байт)" << endl;
+			char Temp[100] = "";
+			cin.ignore();
+			cin.getline(Temp, 100);
+			try
 			{
-				deqsize = deqsize + sizeof(paydeq[i]);
+				if (!IsItInt(Temp))
+				{
+					int tempMaxMem;
+					tempMaxMem = atoi(Temp);
+					if (tempMaxMem < deqsizefunc(paydeq))
+					{
+						MemException Mex("Ограниечение невозможно.", 2);
+						throw Mex;
+					}
+					else
+					{
+						MaxMem = tempMaxMem;
+					}
+					break;
+				}
+				else
+				{
+					Exception ex("Введенное значение не является числом");
+					throw ex;
+					break;
+				}
 			}
-			cout << "Дек занимает места: " << deqsize << endl;
+			catch (MemException & ex)
+			{
+				cout << ex.GetDescription() << " Код ошибки: " << ex.code() << endl;
+				check_pause19 = true;
+				break;
+			}
+			catch (Exception & ex)
+			{
+				PrintEx();
+				cout << ex.GetDescription() << endl;
+				check_pause19 = true;
+				continue;
+			}
+			check_pause19 = true;
 			break;
 		}
+
 		case 0:
 		{
 			check19 = false;
@@ -1162,7 +1204,7 @@ int main()
 			break;
 		}
 	}
-
+	
 #endif // Lab6
 	return 0;
 }
@@ -1188,5 +1230,16 @@ void PrintEx()
 {
 	cout << "----------Сработал обработчик исключительных ситуаций----------" << endl;
 }
+
+ int deqsizefunc(Deque<Worker>& const paydeq)
+{
+	int deqsize = 0;
+	for (int i = 0; i < paydeq.size(); i++)
+	{
+		deqsize = deqsize + sizeof(paydeq[i]);
+	}
+	return deqsize;
+}
+
 
 
