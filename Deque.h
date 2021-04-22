@@ -53,8 +53,12 @@ void Deque<W>::pop_front()
 	if (Size > 0)
 	{
 		Node<W>* temp = head;
+		if (Size != 1)
+		{
+			head = head->pNext;
+		}
 
-		head = head->pNext;
+		
 
 		delete temp;
 
@@ -70,7 +74,7 @@ void Deque<W>::pop_front()
 template<typename W>
 void Deque<W>::push_back(W& const Object)
 {
-	Worker TEMP;
+	W TEMP;
 	TEMP = Object;
 	if (head == nullptr)
 	{

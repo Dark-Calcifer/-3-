@@ -1,5 +1,9 @@
 // Лабораторная работа 7 (3 семестр)
 
+// Изменения, касающиеся ЛР7 начинаются в "#define Lab7" на 48 строчке. 
+// Так получилось, что изначально (делая ЛР5) я создавал класс Deque как шаблонный, чтобы он работал с любым 
+// типом данных, поэтому кроме демонстрационной программы ничего менять не пришлось
+
 #if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 #define _CRT_SECURE_NO_WARNINGS
 #pragma warning(disable:4996)
@@ -42,6 +46,7 @@ int main()
 	bool a = true;
 	vector<Payment>payvec;
 	Deque<P>paydeq;
+	Deque<int>intdeq;
 
 #ifdef Lab7
 
@@ -50,7 +55,6 @@ int main()
 	int PersonCounter[100] = { '\0' };
 	bool IsItInt(char const* A1);
 	void PrintEx();
-	int deqsizefunc(Deque<P>& const paydeq);
 	int MaxMem = 1000;
 	while (check19)
 	{
@@ -61,13 +65,15 @@ int main()
 			check_pause19 = false;
 		}
 		cout << "Количество объектов в деке: " << paydeq.size() << endl << endl;
-		cout << "1) Ввести данные сотрудника " << endl;
+		cout << "1) Добавить сотрудника " << endl;
 		cout << "2) Показать информацию о сотруднике " << endl;
-		cout << "3) Удалить сотрудника" << endl << endl;
+		cout << "3) Удалить сотрудника" << endl;
+		cout << "4) Записать в дек число(int) " << endl;
+		cout << "5) Показать дек чисел " << endl << endl;
 		cout << "0) Выход\n";
 		int choose19;
 		cin >> choose19;
-		if (choose19 > 3 || choose19 < 0)
+		if (choose19 > 5 || choose19 < 0)
 		{
 			cout << "Пункта с таким номером нет, попробуйте еще раз" << endl << endl;
 			check_pause19 = true;
@@ -79,22 +85,7 @@ int main()
 		{
 		case 1: // Ввести данные сотрудника
 		{
-			try
-			{
-				if (deqsizefunc(paydeq) + 36 >= MaxMem)
-				{
-					MemException ex(1);
-					throw ex;
-				}
-			}
-			catch (MemException ex)
-			{
-				PrintEx();
-				cout << ex.GetDescription() << " Code: " << ex.code() << endl;
-				break;
-			}
 			P Person;
-
 			char A[100] = "";
 			int temp, temp1, temp2;
 
@@ -319,6 +310,74 @@ int main()
 				break;
 			}
 			break;
+		}		
+		case 4:
+		{
+			int Num;
+			char d[100] = "";
+			cout << "Введите число: " << endl;
+			cin.ignore();
+			cin.getline(d, 100);
+			try
+			{
+				if (IsItInt(d))
+				{
+					Exception ex("Введенное значение не является числом");
+					throw ex;
+					break;
+				}
+				else
+				{
+					Num = atoi(d);
+					intdeq.push_back(Num);
+					cout << "Число добавлено. " << endl;
+					check_pause19 = true;
+					break;
+				}
+			}
+			catch (Exception ex)
+			{
+				PrintEx();
+				cout << ex.GetDescription() << endl;
+				check_pause19 = true;
+				break;
+			}
+
+		}
+		case 5:
+		{
+
+			int NumOfWorker;
+			cout << "Введите номер числа (0 - всех)" << endl;
+			cin >> NumOfWorker;
+			try
+			{
+				if (NumOfWorker > intdeq.size() || NumOfWorker < 0)
+				{
+					OutOfRangeEx ex("Попытка выходы за пределы выделенной памяти", "intdeq[]");
+					throw ex;
+				}
+				else if (NumOfWorker == 0)
+				{
+					for (unsigned int i = 0; i < intdeq.size(); i++)
+					{
+						cout << intdeq[i] << endl;
+					}
+				}
+				else cout << intdeq[NumOfWorker - 1] << endl;;
+				check_pause19 = true;
+			}
+			catch (OutOfRangeEx & ex)
+			{
+				PrintEx();
+				cout << ex.GetDescription() << endl << "Предположительно ";
+				ex.ShowSpace();
+				check_pause19 = true;
+				break;
+			}
+
+			break;
+
 		}
 		case 0:
 		{
