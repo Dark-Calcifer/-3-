@@ -60,7 +60,11 @@ void Deque<W>::pop_front()
 
 		Size--;
 	}
-
+	else
+	{
+		OutOfRangeEx ex;
+		throw ex;
+	}
 }
 
 template<typename W>
@@ -130,5 +134,10 @@ void Deque<W>::pop_back()
 		delete toDelete;
 
 		Size--;
+	}
+		else
+	{
+		OutOfRangeEx ex;
+		throw ex;
 	}
 }
